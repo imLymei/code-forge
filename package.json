@@ -1,14 +1,16 @@
 {
-	"name": "yacli",
+	"name": "code-forge",
 	"version": "1.0.0",
 	"description": "",
 	"main": "dist/index.js",
 	"bin": {
-		"yacli": "./dist/index.js"
+		"code-forge": "./dist/index.js",
+		"cforge": "./dist/index.js",
+		"coge": "./dist/index.js"
 	},
 	"scripts": {
 		"build": "npx tsc",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "npm run build && code-forge"
 	},
 	"keywords": [],
 	"author": "",
