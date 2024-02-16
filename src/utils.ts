@@ -62,7 +62,7 @@ export function runCommandWithArgs(
 	});
 
 	// TODO: FIX THIS FUCKING THING
-	if (moveOnComplete && args.dir && fs.existsSync(args.dir)) {
-		process.chdir(args.dir);
-	}
+	// if (moveOnComplete && args.dir && fs.existsSync(args.dir)) {
+	// 	process.chdir(args.dir);
+	// }
 }

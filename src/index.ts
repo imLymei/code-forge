@@ -62,8 +62,6 @@ function handleCommandRun(languageName: string, options: Record<string, string>)
 		// @ts-ignore
 		const hasMoveOnComplete: boolean = allOptions.moveOnComplete !== undefined && allOptions.moveOnComplete;
 
-		console.log(options);
-
 		runCommandWithArgs(DATA.commands.createProject, allOptions, hasMoveOnComplete);
 	} else {
 		console.log('This command do not exists. Try creating it in the config folder.');
