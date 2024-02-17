@@ -1,17 +1,17 @@
 import { describe, jest, expect, test } from '@jest/globals';
-import { getCommandWithArgs, getConfig, runCommandWithArgs } from '../src/utils';
+import { getCommandWithArgs, getConfiguration, runCommandWithArgs } from '../src/utils';
 
 describe('configuration files', () => {
 	test('get dynamic configuration file', () => {
-		expect(getConfig()).toHaveProperty('languages');
+		expect(getConfiguration()).toHaveProperty('languages');
 	});
 
 	test('get default configuration file', () => {
-		expect(getConfig(false)).toHaveProperty('languages');
+		expect(getConfiguration(false)).toHaveProperty('languages');
 	});
 
 	test('get custom configuration file', () => {
-		expect(getConfig(true)).toHaveProperty('languages');
+		expect(getConfiguration(true)).toHaveProperty('languages');
 	});
 });
 
