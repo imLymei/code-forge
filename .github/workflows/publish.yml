@@ -3,7 +3,41 @@ name: 'Publish package to NPM'
 on: push
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: create config file
+        run: |
+          mkdir -p .config
+          cp config.json .config/code-forge.json
+      - name: install dependencies
+        run: npm ci
+      - name: run tests
+        run: npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: install dependencies
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: remove src
+        run: rm -rf src
   publish:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -13,14 +47,8 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org
-      - name: instal dependencies
+      - name: install dependencies
         run: npm ci
-      - name: run tests
-        run: npm run test
-      - name: run build
-        run: npm run build
-      - name: remove src
-        run: rm -rf src
       - name: publish
         run: npm publish --access public
         env:
