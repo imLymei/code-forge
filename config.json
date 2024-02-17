@@ -4,7 +4,7 @@
 			"commands": {
 				"createProject": "npx create-next-app@latest <dir>/<name> --ts --tailwind --eslint --app --src-dir --import-alias \"@/*\""
 			},
-			"args": []
+			"args": {}
 		}
 	}
 }

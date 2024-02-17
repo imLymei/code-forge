@@ -17,7 +17,7 @@ const DEFAULT_OPTIONS_SPLIT = '=';
 
 type LanguageConfiguration = {
 	commands: Record<string, string>;
-	args: Record<string, string>[];
+	args: Record<string, string>;
 };
 
 type ConfigurationFile = {
