@@ -14,8 +14,8 @@ jobs:
           node-version: 16
       - name: create config file
         run: |
-          mkdir -p .config
-          cp config.json .config/code-forge.json
+          mkdir -p ~/.config
+          cp config.json ~/.config/code-forge.json
       - name: install dependencies
         run: npm ci
       - name: run tests
