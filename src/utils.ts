@@ -22,47 +22,39 @@ type ConfigurationFile = {
 	languages: Record<string, LanguageConfiguration>;
 };
 
-export function getConfig(): ConfigurationFile {
-	const FILE_CONTENT = fs.readFileSync(HAS_CUSTOM_CONFIG_FILE ? CUSTOM_FILE_PATH : DEFAULT_CONFIG_PATH, {
+export function getConfig(useCustomConfigFile: boolean = HAS_CUSTOM_CONFIG_FILE): ConfigurationFile {
+	const FILE_CONTENT = fs.readFileSync(useCustomConfigFile ? CUSTOM_FILE_PATH : DEFAULT_CONFIG_PATH, {
 		encoding: 'utf8',
 	});
 
 	return JSON.parse(FILE_CONTENT);
 }
 
-export function showTitle() {
+export function showTitle(): void {
 	console.log(figlet.textSync(cliConfig.name));
 }
 
-export function runCommandWithArgs(
-	command: string,
-	args: Record<string, string>,
-	moveOnComplete: boolean
-): void {
+export function getCommandWithArgs(command: string, args: Record<string, string>): string {
 	const variableNames = Array.from(command.matchAll(/<(\w+)>/g), (match) => match[1]);
 
 	// Check if each variable exists in the args object
 	for (const variableName of variableNames) {
 		if (!(variableName in args)) {
-			console.error(`Missing argument: ${variableName}`);
-			return;
+			throw new Error(`Missing argument: ${variableName}`);
 		}
 	}
 
 	// Replace variables in command with argument values
-	const commandWithArgs = command.replace(/<(\w+)>/g, (_, key) => args[key]);
+	return command.replace(/<(\w+)>/g, (_, key) => args[key]);
+}
 
+export function runCommandWithArgs(command: string): void {
 	// Execute the command
-	exec(commandWithArgs, (error, stdout) => {
+	exec(command, (error, stdout) => {
 		if (error) {
 			console.error(`exec error: ${error}`);
 			return;
 		}
-		console.log(`stdout:\n${stdout}`);
+		console.log(`\nstdout:\n${stdout}`);
 	});
-
-	// TODO: FIX THIS FUCKING THING
-	// if (moveOnComplete && args.dir && fs.existsSync(args.dir)) {
-	// 	process.chdir(args.dir);
-	// }
 }
