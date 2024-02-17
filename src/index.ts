@@ -29,42 +29,7 @@ program
 
 program.parse(process.argv);
 
-const options = program.opts();
-
-function handleCommandRun(languageName: string, options: Record<string, string>) {
-	const configuration = getConfiguration();
-
-	const DATA = configuration.languages[languageName];
-
-	if (DATA && DATA.commands.createProject) {
-		console.log(`Running "${languageName}" script with:`);
-
-		options.dir = DATA.dir;
-
-		// @ts-ignore
-		const realOptions: string[] = options.options;
-
-		const additionalOptions = realOptions.reduce((object: Record<string, string>, currentValue) => {
-			const [key, value] = currentValue.split(':');
-			object[key] = value;
-			return object;
-		}, {});
-
-		const allOptions = { ...options, ...additionalOptions };
-		delete allOptions.options;
-
-		for (const key in allOptions) {
-			let value = allOptions[key];
-			console.log(`	${key}: ${value}`);
-		}
-
-		allOptions.dir = path.join(HOME, DATA.dir);
-
-		runCommandWithArgs(getCommandWithArgs(DATA.commands.createProject, allOptions));
-	} else {
-		console.log('This command do not exists. Try creating it in your config file.');
-	}
-}
+// const options = program.opts();
 
 function runLanguageScript(languageName: string, commandName?: string, optionsArray?: string[]): void {
 	const configuration = getConfiguration();

@@ -16,8 +16,8 @@ export const HAS_CUSTOM_CONFIG_FILE = fs.existsSync(CUSTOM_FILE_PATH);
 const DEFAULT_OPTIONS_SPLIT = '=';
 
 type LanguageConfiguration = {
-	dir: string;
 	commands: Record<string, string>;
+	args: Record<string, string>[];
 };
 
 type ConfigurationFile = {
