@@ -15,7 +15,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: instal dependencies
         run: npm ci
-      -name: run tests
+      - name: run tests
         run: npm run test
       - name: run build
         run: npm run build
