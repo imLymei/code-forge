@@ -2,16 +2,15 @@
 
 import { program } from 'commander';
 import {
-	HOME,
+	DEFAULT_ARGUMENTS_SPLIT,
 	getClosestString,
 	getCommandWithArgs,
 	getConfiguration,
-	parseArrayToOptions,
+	parseArrayToArguments,
 	runCommandWithArgs,
 	showTitle,
 } from './utils';
 import cliConfig from './config';
-import path from 'path';
 
 program.version(cliConfig.version).description(cliConfig.description);
 
@@ -24,14 +23,12 @@ program
 	)
 	.argument('<language>', 'Programming language')
 	.argument('[command]', 'Programming language')
-	.arguments('[options...]')
+	.arguments('[arguments...]')
 	.action(runLanguageScript);
 
 program.parse(process.argv);
 
-// const options = program.opts();
-
-function runLanguageScript(languageName: string, commandName?: string, optionsArray?: string[]): void {
+function runLanguageScript(languageName: string, commandName?: string, argumentArray: string[] = []): void {
 	const configuration = getConfiguration();
 	const language = configuration.languages[languageName];
 
@@ -60,15 +57,17 @@ function runLanguageScript(languageName: string, commandName?: string, optionsAr
 		return;
 	}
 
-	if (!optionsArray?.length) {
-		console.log(`"${languageName}" command "${commandName}": ${command}:`);
+	const defaultArgs: string[] = [];
 
-		return;
+	for (const key in language.args) {
+		const value = language.args[key];
+
+		defaultArgs.push(`${key}${DEFAULT_ARGUMENTS_SPLIT}${value}`);
 	}
 
-	const options = parseArrayToOptions(optionsArray);
+	const args = parseArrayToArguments([...defaultArgs, ...argumentArray]);
 
-	runCommandWithArgs(getCommandWithArgs(command, options));
+	runCommandWithArgs(getCommandWithArgs(command, args));
 }
 
 if (!process.argv.slice(2).length) {

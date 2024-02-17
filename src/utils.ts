@@ -13,7 +13,7 @@ export const DEFAULT_CONFIG_PATH = path.join(__dirname, '..', 'config.json');
 export const CUSTOM_FILE_PATH = path.join(HOME, '.config/code-forge.json');
 export const HAS_CUSTOM_CONFIG_FILE = fs.existsSync(CUSTOM_FILE_PATH);
 
-const DEFAULT_OPTIONS_SPLIT = '=';
+export const DEFAULT_ARGUMENTS_SPLIT = '=';
 
 type LanguageConfiguration = {
 	commands: Record<string, string>;
@@ -55,9 +55,9 @@ export function getClosestString(input: string, data: string[]): string {
 }
 
 // TODO: ADD TEST FUNCTION
-export function parseArrayToOptions(
+export function parseArrayToArguments(
 	array: string[],
-	splitMethod = DEFAULT_OPTIONS_SPLIT
+	splitMethod = DEFAULT_ARGUMENTS_SPLIT
 ): Record<string, string> {
 	return Object.fromEntries(array.map((option) => option.split(splitMethod)));
 }
