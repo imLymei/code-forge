@@ -1,10 +1,11 @@
 import os from 'os';
 import fs from 'fs';
 import path from 'path';
-import { exec } from 'child_process';
+import { exec, execSync } from 'child_process';
 
 import figlet from 'figlet';
 import cliConfig from './config';
+import { exit } from 'process';
 
 export const HOME = os.homedir();
 export const DEFAULT_CONFIG_PATH = path.join(__dirname, '..', 'config.json');
@@ -40,7 +41,8 @@ export function getCommandWithArgs(command: string, args: Record<string, string>
 	// Check if each variable exists in the args object
 	for (const variableName of variableNames) {
 		if (!(variableName in args)) {
-			throw new Error(`Missing argument: ${variableName}`);
+			console.error(`Missing argument: ${variableName}`);
+			exit(1);
 		}
 	}
 
@@ -48,13 +50,15 @@ export function getCommandWithArgs(command: string, args: Record<string, string>
 	return command.replace(/<(\w+)>/g, (_, key) => args[key]);
 }
 
-export function runCommandWithArgs(command: string): void {
+export function runCommandWithArgs(command: string): boolean {
 	// Execute the command
-	exec(command, (error, stdout) => {
-		if (error) {
-			console.error(`exec error: ${error}`);
-			return;
-		}
-		console.log(`\nstdout:\n${stdout}`);
-	});
+	try {
+		const result = execSync(command, { encoding: 'utf8' });
+
+		console.log(result);
+
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
