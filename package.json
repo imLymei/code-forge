@@ -1,6 +1,6 @@
 {
-	"name": "code-forge",
-	"version": "1.0.0",
+	"name": "@imLymei/code-forge",
+	"version": "1.1.0",
 	"description": "",
 	"main": "dist/index.js",
 	"bin": {
@@ -12,9 +12,16 @@
 		"build": "npx tsc",
 		"test": "jest"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": [
+		"cli",
+		"npmtool",
+		"script",
+		"node"
+	],
+	"author": "Felipe Cardoso Brito da Silveira",
 	"license": "ISC",
+	"repository": "https://github.com/imLymei/code-forge",
+	"homepage": "https://github.com/imLymei/code-forge",
 	"devDependencies": {
 		"@types/figlet": "^1.5.8",
 		"@types/js-levenshtein": "^1.1.3",
