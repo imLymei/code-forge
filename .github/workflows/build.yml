@@ -1,13 +1,13 @@
-name: 'Publish'
+name: 'Build'
 
 on:
   workflow_run:
-    workflows: ['Build']
+    workflows: ['Test']
     types:
       - completed
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -16,11 +16,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          registry-url: 'https://registry.npmjs.org'
       - name: install dependencies
         run: npm ci
-      - name: publish
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_KEY}}
-          NPM_TOKEN: ${{secrets.NPM_AUTH_KEY}}
+      - name: build
+        run: npm run build
+      - name: remove src
+        run: rm -rf src
