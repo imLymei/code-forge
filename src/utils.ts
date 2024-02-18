@@ -32,6 +32,47 @@ export function getConfiguration(useCustomConfigFile: boolean = HAS_CUSTOM_CONFI
 	return JSON.parse(FILE_CONTENT);
 }
 
+// TODO: ADD TEST FUNCTION
+export function createConfigurationFile(): void {
+	const dotConfigPath = path.join(HOME, '.config/');
+
+	try {
+		const hasConfigFile = fs.existsSync(CUSTOM_FILE_PATH);
+
+		if (hasConfigFile) {
+			console.log('you already has a configuration file.');
+			return;
+		}
+
+		const hasDotConfig = fs.existsSync(dotConfigPath);
+
+		if (!hasDotConfig) {
+			fs.mkdirSync(dotConfigPath, { recursive: true });
+			console.log('creating your "~/.config/" directory');
+		}
+
+		fs.writeFileSync(CUSTOM_FILE_PATH, JSON.stringify(getConfiguration(), null, 2));
+
+		console.log('your configuration file was created');
+	} catch (error) {
+		console.error(`error: failed to create configuration file.\n${error}`);
+	}
+}
+
+export function removeConfigurationFile(): void {
+	const hasConfigFile = fs.existsSync(CUSTOM_FILE_PATH);
+
+	if (!hasConfigFile) {
+		console.log('you do not have a configuration file');
+		return;
+	}
+
+	fs.unlink(CUSTOM_FILE_PATH, (error) => {
+		if (error) console.error(`error: failed to remove your configuration file.\n${error}`);
+		else console.log('your configuration file was deleted');
+	});
+}
+
 export function showTitle(): void {
 	console.log(figlet.textSync(cliConfig.name));
 }

@@ -1,20 +1,22 @@
 #! /usr/bin/env node
 
-import { program } from 'commander';
+import { OptionValues, program } from 'commander';
 import {
+	CUSTOM_FILE_PATH,
 	DEFAULT_ARGUMENTS_SPLIT,
+	HOME,
+	createConfigurationFile,
 	getClosestString,
 	getCommandWithArgs,
 	getConfiguration,
 	parseArrayToArguments,
+	removeConfigurationFile,
 	runCommandWithArgs,
 	showTitle,
 } from './utils';
 import cliConfig from './config';
 
 program.version(cliConfig.version).description(cliConfig.description);
-
-showTitle();
 
 program
 	.command('run')
@@ -25,6 +27,13 @@ program
 	.argument('[command]', 'Programming language')
 	.arguments('[arguments...]')
 	.action(runLanguageScript);
+
+program
+	.command('config')
+	.option('-c, --create', 'create your custom configuration file')
+	.option('-r, --remove', 'remove your custom configuration file')
+	.option('-d, --dir', 'show the custom configuration file directory')
+	.action(runConfigCommand);
 
 program.parse(process.argv);
 
@@ -68,6 +77,20 @@ function runLanguageScript(languageName: string, commandName?: string, argumentA
 	const args = parseArrayToArguments([...defaultArgs, ...argumentArray]);
 
 	runCommandWithArgs(getCommandWithArgs(command, args));
+}
+
+function runConfigCommand(options: OptionValues) {
+	if (options.create) {
+		createConfigurationFile();
+	}
+
+	if (options.remove) {
+		removeConfigurationFile();
+	}
+
+	if (options.dir) {
+		console.log(CUSTOM_FILE_PATH);
+	}
 }
 
 if (!process.argv.slice(2).length) {
