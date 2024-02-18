@@ -1,0 +1,22 @@
+name: 'Test'
+
+on: push
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: create config file
+        run: |
+          mkdir -p ~/.config
+          cp config.json ~/.config/code-forge.json
+      - name: install dependencies
+        run: npm ci
+      - name: run tests
+        run: npm run test
