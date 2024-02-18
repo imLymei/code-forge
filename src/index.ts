@@ -4,7 +4,6 @@ import { OptionValues, program } from 'commander';
 import {
 	CUSTOM_FILE_PATH,
 	DEFAULT_ARGUMENTS_SPLIT,
-	HOME,
 	createConfigurationFile,
 	getClosestString,
 	getCommandWithArgs,
@@ -12,7 +11,6 @@ import {
 	parseArrayToArguments,
 	removeConfigurationFile,
 	runCommandWithArgs,
-	showTitle,
 } from './utils';
 import cliConfig from './config';
 
@@ -23,8 +21,8 @@ program
 	.description(
 		'run a language command from your configuration file. If you do not have a custom configuration file, the default will be used as a reference.\n'
 	)
-	.argument('<language>', 'Programming language')
-	.argument('[command]', 'Programming language')
+	.argument('<language>', 'programming language')
+	.argument('[command]', 'programming language command')
 	.arguments('[arguments...]')
 	.action(runLanguageScript);
 

@@ -10,7 +10,7 @@ const cliConfig = {
 	name: 'Code Forge',
 	version: getPackageVersion(),
 	description:
-		'Code Forge is a command-line tool for effortlessly creating new projects in any language. Customize commands in a config file to streamline React, Next.js, Rust, Python, and more, all within your preferred directories. Simplify project setup and accelerate development with Code Forge.',
+		'Code-Forge is a command-line interface (CLI) tool designed to simplify the execution of boilerplate scripts and command-line commands. With Code-Forge, users can easily create and delete sets of commands for different programming languages, as well as define preset arguments to be passed with those commands.',
 };
 
 export default cliConfig;
