@@ -28,6 +28,7 @@ program
 
 program
 	.command('config')
+	.command('add <route>', 'add a new property to your configuration file directly')
 	.option('-c, --create', 'create your custom configuration file')
 	.option('-r, --remove', 'remove your custom configuration file')
 	.option('-d, --dir', 'show the custom configuration file directory')
