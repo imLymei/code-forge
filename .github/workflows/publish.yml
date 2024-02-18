@@ -15,6 +15,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: install dependencies
         run: npm ci
+      - name: create config file
+        run: |
+          mkdir -p ~/.config
+          cp config.json ~/.config/code-forge.json
       - name: run test
         run: npm run test
       - name: build
