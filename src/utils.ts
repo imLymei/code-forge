@@ -15,6 +15,10 @@ export const HAS_CUSTOM_CONFIG_FILE = fs.existsSync(CUSTOM_FILE_PATH);
 
 export const DEFAULT_ARGUMENTS_SPLIT = '=';
 
+const NORMAL_TAG_REGEX = /<(\w+)>/g;
+const TERNARY_TAG_REGEX = /<(\w+)\?([\w\s]+):([\w\s]+)>/g;
+const CONDITIONAL_TAG_REGEX = /<(\w+)\?\?([\w\s]+)>/g;
+
 type LanguageConfiguration = {
 	commands: Record<string, string>;
 	args: Record<string, string>;
@@ -104,7 +108,7 @@ export function parseArrayToArguments(
 }
 
 export function getCommandWithArgs(command: string, args: Record<string, string>): string {
-	const variableNames = Array.from(command.matchAll(/<(\w+)>/g), (match) => match[1]);
+	const variableNames = Array.from(command.matchAll(NORMAL_TAG_REGEX), (match) => match[1]);
 
 	// Check if each variable exists in the args object
 	for (const variableName of variableNames) {
@@ -114,8 +118,16 @@ export function getCommandWithArgs(command: string, args: Record<string, string>
 		}
 	}
 
+	command = command.replace(NORMAL_TAG_REGEX, (_, key) => args[key]);
+	command = command.replace(TERNARY_TAG_REGEX, (_, key, onTrue, onFalse) => {
+		return key in args ? onTrue : onFalse;
+	});
+	command = command.replace(CONDITIONAL_TAG_REGEX, (_, key, onTrue) => {
+		return key in args ? onTrue : '';
+	});
+
 	// Replace variables in command with argument values
-	return command.replace(/<(\w+)>/g, (_, key) => args[key]);
+	return command;
 }
 
 export function runCommandWithArgs(command: string): boolean {

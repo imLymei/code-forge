@@ -5,6 +5,11 @@
 				"create": "npx create-next-app@latest <dir>/<name> --ts --tailwind --eslint --app --src-dir --import-alias \"@/*\""
 			},
 			"args": {}
+		},
+		"new": {
+			"commands": {
+				"conditional": "echo <isWorking?yes:no>"
+			}
 		}
 	}
 }
