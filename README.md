@@ -1,4 +1,4 @@
-![test](https://github.com/imLymei/code-forge/actions/workflows/test.yml/badge.svg) ![build](https://github.com/imLymei/code-forge/actions/workflows/build.yml/badge.svg) ![npm](https://github.com/imLymei/code-forge/actions/workflows/publish.yml/badge.svg)
+![linux test](https://github.com/imLymei/code-forge/actions/workflows/linux-test.yml/badge.svg) ![windows test](https://github.com/imLymei/code-forge/actions/workflows/windows-test.yml/badge.svg) ![macos test](https://github.com/imLymei/code-forge/actions/workflows/build.yml/macos-test.svg) ![npm](https://github.com/imLymei/code-forge/actions/workflows/publish.yml/badge.svg)
 
 # Code Forge CLI
 
