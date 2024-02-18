@@ -1,7 +1,7 @@
 {
 	"name": "@lymei/code-forge",
 	"version": "1.2.0",
-	"description": "",
+	"description": "'Code-Forge is a command-line interface (CLI) tool designed to simplify the execution of boilerplate scripts and command-line commands. With Code-Forge, users can easily create and delete sets of commands for different programming languages, as well as define preset arguments to be passed with those commands.',",
 	"main": "dist/index.js",
 	"bin": {
 		"code-forge": "./dist/index.js",
